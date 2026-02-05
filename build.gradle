@@ -1,5 +1,5 @@
 plugins {
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'org.springframework.boot' version '2.3.3.RELEASE'
 }
 
@@ -17,13 +17,23 @@ subprojects {
         targetCompatibility = 11
     }
 
+    // Force Java 17 toolchain - Gradle will auto-download if not available
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
     repositories {
-        jcenter()
+        mavenCentral()
     }
 
     dependencyManagement {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.3.RELEASE")
+        }
+        dependencies {
+             dependency 'org.projectlombok:lombok:1.18.30'
         }
     }
 }
